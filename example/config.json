@@ -30,6 +30,8 @@
       "SendIP": "0.0.0.0",
       "DeviceOnlineMinTraffic": 200,
       "ReportMinTraffic": 0,
+      "EnableMonitor": false,
+      "MonitorInterval": 60,
       "EnableTFO": false,
       "EnableSniff": true,
       "SniffOverrideDestination": true,

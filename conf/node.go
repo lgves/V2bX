@@ -239,19 +239,23 @@ func (n *NodeConfig) UnmarshalJSON(data []byte) (err error) {
 }
 
 type Options struct {
-	Name                   string                `json:"Name"`
-	Core                   string                `json:"Core"`
-	CoreName               string                `json:"CoreName"`
-	ListenIP               string                `json:"ListenIP"`
-	SendIP                 string                `json:"SendIP"`
-	DeviceOnlineMinTraffic int64                 `json:"DeviceOnlineMinTraffic"`
-	ReportMinTraffic       int64                 `json:"ReportMinTraffic"`
-	LimitConfig            LimitConfig           `json:"LimitConfig"`
-	RawOptions             json.RawMessage       `json:"RawOptions"`
-	XrayOptions            *XrayOptions          `json:"XrayOptions"`
-	SingOptions            *SingOptions          `json:"SingOptions"`
-	Hysteria2ConfigPath    string                `json:"Hysteria2ConfigPath"`
-	CertConfig             *CertConfig           `json:"CertConfig"`
+	Name                   string `json:"Name"`
+	Core                   string `json:"Core"`
+	CoreName               string `json:"CoreName"`
+	ListenIP               string `json:"ListenIP"`
+	SendIP                 string `json:"SendIP"`
+	DeviceOnlineMinTraffic int64  `json:"DeviceOnlineMinTraffic"`
+	ReportMinTraffic       int64  `json:"ReportMinTraffic"`
+	// EnableMonitor 打开后，节点会周期性采集服务器负载（CPU/内存/Swap/磁盘）
+	// 并上报给面板。MonitorInterval 为上报间隔（秒），<=0 时用默认值 60s。
+	EnableMonitor       bool            `json:"EnableMonitor"`
+	MonitorInterval     int             `json:"MonitorInterval"`
+	LimitConfig         LimitConfig     `json:"LimitConfig"`
+	RawOptions          json.RawMessage `json:"RawOptions"`
+	XrayOptions         *XrayOptions    `json:"XrayOptions"`
+	SingOptions         *SingOptions    `json:"SingOptions"`
+	Hysteria2ConfigPath string          `json:"Hysteria2ConfigPath"`
+	CertConfig          *CertConfig     `json:"CertConfig"`
 	// W6 / audit #8: opt-in widening of the panel-pushed custom-outbound
 	// trust boundary. Nil / unset → safe default (whitelist freedom +
 	// blackhole). See CustomOutboundConfig docs for the rationale and the

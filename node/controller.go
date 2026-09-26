@@ -47,6 +47,7 @@ type Controller struct {
 	renewCertPeriodic         *task.Task
 	dynamicSpeedLimitPeriodic *task.Task
 	onlineIpReportPeriodic    *task.Task
+	statusReportPeriodic      *task.Task
 	*conf.Options
 	apiConfig *conf.ApiConfig
 	apiMutex  sync.RWMutex
@@ -267,6 +268,9 @@ func (c *Controller) Close() error {
 	}
 	if c.onlineIpReportPeriodic != nil {
 		c.onlineIpReportPeriodic.Close()
+	}
+	if c.statusReportPeriodic != nil {
+		c.statusReportPeriodic.Close()
 	}
 	err := c.server.DelNode(c.tag)
 	if err != nil {

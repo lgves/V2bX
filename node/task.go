@@ -60,6 +60,21 @@ func (c *Controller) startTasks(node *panel.NodeInfo) {
 		}
 		log.Printf("[%s: %d] Start dynamic speed limit", c.getAPIClient().NodeType, c.getAPIClient().NodeId)
 	}
+	if c.Options.EnableMonitor {
+		interval := time.Duration(c.Options.MonitorInterval) * time.Second
+		if c.Options.MonitorInterval <= 0 {
+			interval = defaultMonitorInterval
+		}
+		c.statusReportPeriodic = &task.Task{
+			Name:       "reportNodeStatusTask",
+			Interval:   interval,
+			ExecuteCtx: c.reportNodeStatusTask,
+			Reload:     c.reloadAPIClient,
+		}
+		log.WithField("tag", c.tag).Info("Start report node status")
+		// delay to start reportNodeStatus, 首次采集需要 CPU 采样基线。
+		_ = c.statusReportPeriodic.Start(false)
+	}
 }
 
 func (c *Controller) nodeInfoMonitor(ctx context.Context) (err error) {
