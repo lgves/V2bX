@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - dev_new
+      - lg_dev_new
     paths:
       - "**/*.go"
       - "go.mod"
